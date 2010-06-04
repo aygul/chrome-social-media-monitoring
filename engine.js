@@ -179,7 +179,7 @@ function getProbesCount(onSuccess, onError) {
 	 */
 	if(probes){
 		for (var i in probes) {
-			loadTweets(probes[i]);
+			loadActivities(probes[i]);
 		}
 	}
 	
@@ -188,6 +188,37 @@ function getProbesCount(onSuccess, onError) {
 // }
 	
 }
+
+function loadActivities(probe, port){
+	
+	switch(probe.serviceId){
+	   case "twitter":
+		      twitterConnector.loadActivities(port,probe);
+		      break;
+	   case "buzz":
+
+    break;
+    default:
+
+    break;
+	}
+}
+
+function buildProbeQuery(probe){
+	
+	switch(probe.serviceId){
+	   case "twitter":
+		      return twitterConnector.buildProbeQuery(probe);
+		      break;
+	   case "buzz":
+		   return "https://mail.google.com/mail/?shva=1#buzz/search/" + escape(probe.query);
+    break;
+    default:
+    	return "about:";
+    break;
+	}
+}
+
 
 function showNoEvents() {
 	chrome.browserAction.setIcon({"path":"img/icon.png"});

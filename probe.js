@@ -13,6 +13,9 @@ function Probe() {
 	this.lastupdate = undefined;
 	this.locationAddress = undefined;
 	this.thresholdRatio = 3;
+	this.thresholdRatio = 3;
+	
+	this.lastBody = undefined;
 }
 
 Probe.prototype.setQuery = function(query){

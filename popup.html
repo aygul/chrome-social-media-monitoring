@@ -138,7 +138,7 @@ $(document).ready(function() {
 		});
 
 		if(!ignore && !$(this).is('.disabled')){
-			currentSelectedService = "twitter";
+			currentSelectedService = "buzz";
 			addProbeHTML();
 			addButtonListeners();
 		}  
@@ -688,15 +688,7 @@ function xpath(path, node) {
 }
 
 function buildProbeQuery(probeObj){
-	if(probeObj){
-		if (probeObj.radius == undefined){
-			return 'http://search.twitter.com/search?q=' + escape(probeObj.query) + '&ands=&phrase=&ors=&nots=&tag=&lang=all&from=&to=&ref=&near=&within=&units=km&since=&until=&rpp=15';
-		}else{
-			return 'http://search.twitter.com/search?q=' + escape(probeObj.query) + '&ands=&phrase=&ors=&nots=&tag=&lang=all&from=&to=&ref=&near=&within=' + probeObj.radius + '&units=km&since=&until=&rpp=15' + '&geocode=' + escape(probeObj.latitude + ',' + probeObj.longitude + ',' + probeObj.radius + 'km');
-		}
-	}else{
-		return 'about:';
-	}
+   return chrome.extension.getBackgroundPage().buildProbeQuery(probeObj);
 }
 
 function save() {
@@ -718,6 +710,7 @@ function save() {
 		 }
 
 		var tagProbe = new Probe();
+		tagProbe.serviceId = currentSelectedService;
 		tagProbe.query = tagObj.val();
 		tagProbe.shortTermTweetsPerMin = 0;
 		tagProbe.longTermTweetsPerMin = 0 ;
